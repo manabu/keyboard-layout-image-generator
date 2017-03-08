@@ -9,6 +9,8 @@ import (
 	"github.com/jung-kurt/gofpdf"
 )
 
+const version = "0.1.0"
+
 type KeyInformation struct {
 	x      float64
 	y      float64
