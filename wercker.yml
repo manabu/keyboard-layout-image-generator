@@ -49,6 +49,8 @@ deploy:
     - script:
         name: go get
         code: |
+          go get  github.com/pointlander/peg
+          peg keymap_image.peg
           go get ./...
     - wercker/gox:
         os: darwin linux windows
