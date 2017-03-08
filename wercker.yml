@@ -61,7 +61,7 @@ deploy:
         code: |
           for dir in $WERCKER_OUTPUT_DIR/pkg/*; do
             if [ -d "$dir" ]; then
-              cp dockerlayer.txt "$dir/README.txt"
+              cp description.txt "$dir/README.txt"
             fi
           done
     - tcnksm/zip:
