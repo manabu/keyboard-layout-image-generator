@@ -1,5 +1,7 @@
 # keyboard-layout-image-generator
-Generate Keyboard Image from source code of [qmk/qmk_firmware: keyboard controller firmware for Atmel AVR USB family](https://github.com/qmk/qmk_firmware)
+Generate Keyboard Image PDF file
+ from source code `keymap.c`
+ which is for [qmk/qmk_firmware: keyboard controller firmware for Atmel AVR USB family](https://github.com/qmk/qmk_firmware)
 
 Currently design for only ErgoDox
 
