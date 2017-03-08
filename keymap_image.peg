@@ -1,0 +1,77 @@
+package main
+
+type Parser Peg {
+    s Scan
+}
+
+
+root <- expression EOT /
+        expression <.+> {p.s.Err(begin)} EOT /
+        <.+> {p.s.Err(begin)} EOT
+
+EOT <- !.
+
+expression <-  sentence*
+
+
+LINECOMMENT <- <'//' (!'\n' .)*> {
+ //fmt.Printf("LINECOMMENT\n")
+}
+LONGCOMMENT <- <'/*' (!'*/'.)* '*/'>{
+ //fmt.Printf("LONGCOMMENT\n")
+}
+
+COMMENT <- (LINECOMMENT/LONGCOMMENT)
+
+SPACING <- ( [ \t\r\n] / <'\n'>       {
+                         p.s.line++;
+                         p.s.lineHead = begin + 1
+                      }      / COMMENT )*
+
+KEYMAPS_START <- 'keymaps' {
+ p.s.inKeymaps = true
+ //fmt.Printf("KEYMAPS_START\n")
+}
+KEYMAPS_END <- '};' {
+ if(p.s.inKeymaps){
+  //fmt.Printf("KEYMAPS_END\n")
+  p.s.inKeymaps = false
+ }
+}
+BRACKETS <- '[' literal* ']' {
+  //fmt.Printf("BRACKETS!!\n")
+}
+KEYMAP <- 'KEYMAP('
+          SPACING
+          ( FUNC  {
+           // fmt.Printf("line %d(%d) FIND:FUNC \"%s\"\n", p.s.line, begin - p.s.lineHead, text)
+           p.s.keys[p.s.layerNumber] = append(p.s.keys[p.s.layerNumber],text)
+
+           } / SYMB {
+            //fmt.Printf("line %d(%d) FIND:SYMBOL \"%s\"\n", p.s.line, begin - p.s.lineHead, text)
+            p.s.keys[p.s.layerNumber] = append(p.s.keys[p.s.layerNumber],text)
+            } / [ \t\r\n] / ',' / COMMENT )  *
+          ')'  {
+  //fmt.Printf("KEYMAP[%d]!! is done\n",p.s.layerNumber)
+  p.s.layerNumber = p.s.layerNumber + 1
+}
+
+FUNC <- <SYMB '(' ( SYMB (',' SPACING SYMB )* ) ')'> SPACING
+SYMB <- <IdChar+> SPACING
+IdChar   <- [a-z] / [A-Z] / [0-9] / [_]
+
+
+literal <- ' '+       {  }   /
+           <'\n'>       {
+                         p.s.line++;
+                         p.s.lineHead = begin + 1
+                      }      /
+          KEYMAPS_START /
+          KEYMAPS_END /
+          LINECOMMENT /
+          LONGCOMMENT /
+           <[^ \[\]\n]+>  { 
+                        //fmt.Printf("line %d(%d) KIND:OTHER \"%s\"\n", p.s.line, begin - p.s.lineHead, text)
+                      }
+
+sentence <-  BRACKETS / KEYMAP / literal
