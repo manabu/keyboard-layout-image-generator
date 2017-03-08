@@ -19,7 +19,7 @@ go run keymap_image.go keymap_image.peg.go keymap.c > layout.pdf
 
 ## Get keymap
 
-If you have own image.
+If you don't have own image.
 
 ```
 curl -o keymap.c https://raw.githubusercontent.com/qmk/qmk_firmware/master/keyboards/ergodox/keymaps/default/keymap.c
