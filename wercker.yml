@@ -71,6 +71,7 @@ deploy:
           if [ -n "$GOBUMP_NEW_VERSION" ]; then
             export RELEASE_TAG="$GOBUMP_NEW_VERSION"
           fi
+
     - tcnksm/ghr:
         token: $GITHUB_TOKEN
         input: $WERCKER_OUTPUT_DIR/dist
