@@ -40,6 +40,8 @@ So I create PEG file for very simple and adapt for ErgoDox `keymap.c` .
 * [ ] Long press key
 * [ ] Key combinations
 * [ ] Color
+* [ ] Rotate some keys label
+* [ ] More flexible mapping to keys
 * [ ] Output JSON for [Keyboard Layout Editor](http://www.keyboard-layout-editor.com/)
 
 
