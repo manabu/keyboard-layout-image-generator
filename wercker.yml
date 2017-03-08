@@ -10,6 +10,8 @@ build:
     - script:
         name: go get
         code: |
+          go get  github.com/pointlander/peg
+          peg keymap_image.peg
           go get -t ./...
     - script:
         name: go test
