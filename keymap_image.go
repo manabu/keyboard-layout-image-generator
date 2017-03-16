@@ -37,7 +37,7 @@ func (self *Scan) Init() {
 	self.m = map[string]string{"KC_EQL": "=",
 		"KC_DELT": "Del", "KC_BSPC": "BkSp",
 		"KC_TRNS": "", "KC_ENT": "Enter", "KC_1": "1",
-		"KC_2": "2", "KC_3": "3", "KC_4": "4", "KC_5": "5", "KC_6": "7",
+		"KC_2": "2", "KC_3": "3", "KC_4": "4", "KC_5": "5", "KC_6": "6",
 		"KC_7": "7", "KC_8": "8", "KC_9": "9", "KC_0": "0",
 		"KC_A": "A", "KC_B": "B", "KC_C": "C", "KC_D": "D",
 		"KC_E": "E", "KC_F": "F", "KC_G": "G", "KC_H": "H",
