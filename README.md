@@ -5,6 +5,35 @@ Generate Keyboard Image PDF file
 
 Currently design for only ErgoDox
 
+
+# Background
+
+* [ErgoDox EZ Configurator](http://configure.ergodox-ez.com/keyboard_layouts/new)
+
+* [Keyboard Layout Editor](http://www.keyboard-layout-editor.com/)
+
+These are nice editor and very good looking easy to see my keyboard layouts.
+
+But when I create custom one with:
+
+* [qmk/qmk_firmware: keyboard controller firmware for Atmel AVR USB family](https://github.com/qmk/qmk_firmware/)
+
+No image to keymap.
+
+After the change of keymap with source code `keymap.c` .
+
+No image of keyboard layouts .
+
+This application generate PDF image from `keymap.c` .
+
+# Goal
+
+Goal is no need to maintain double.
+
+# Download
+
+* [Releases · manabu/keyboard-layout-image-generator](https://github.com/manabu/keyboard-layout-image-generator/releases)
+
 # How to build
 
 ```
@@ -43,7 +72,7 @@ So I create PEG file for very simple and adapt for ErgoDox `keymap.c` .
 * [ ] Rotate some keys label
 * [ ] More flexible mapping to keys
 * [ ] Output JSON for [Keyboard Layout Editor](http://www.keyboard-layout-editor.com/)
-
+* [ ] If it can , more easy to see stable version and current develop version.  
 
 # Reference
 
