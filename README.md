@@ -26,6 +26,10 @@ No image of keyboard layouts .
 
 This application generate PDF image from `keymap.c` .
 
+## Keyboard
+
+* [qmk_firmware/keycode.txt at master · qmk/qmk_firmware](https://github.com/qmk/qmk_firmware/blob/master/doc/keycode.txt)
+
 # Goal
 
 Goal is no need to maintain double.
