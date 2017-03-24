@@ -50,7 +50,7 @@ func (self *Scan) Init() {
 		"KC_HASH": "#", "KC_DLR": "$", "KC_LPRN": "(", "KC_RPRN": ")", "KC_GRV": "`",
 		"KC_PERC": "%", "KC_CIRC": "^", "KC_LBRC": "[", "KC_RBRC": "]", "KC_TILD": "~",
 		"KC_PLUS": "+", "KC_ASTR": "*", "KC_DOT": ".", "KC_AMPR": "&",
-		"KC_MINS": "-", "KC_BSLS": "\\", "KC_RSFT": "RShift",
+		"KC_MINS": "-", "KC_BSLS": "\\", "KC_RSFT": "RSft",
 		"KC_MUTE": "Mute", "RGB_HUD": "Hue-", "RGB_HUI": "Hue+",
 		"KC_F1": "F1", "KC_F2": "F2", "KC_F3": "F3", "KC_F4": "F4",
 		"KC_F5": "F5", "KC_F6": "F6", "KC_F7": "F7", "KC_F8": "F8",
@@ -60,11 +60,12 @@ func (self *Scan) Init() {
 		"KC_BTN1": "Lclk", "KC_BTN2": "Rclk",
 		"RGB_TOG": "Toggle", "RGB_SLD": "Solid",
 		"RGB_VAD": "Brightness-", "RGB_VAI": "Brightness+", "RGB_MOD": "Animat",
-		"KC_LSFT": "LShift", "KC_SPC": "SPC",
+		"KC_LSFT": "LSft", "KC_SPC": "SPC",
 		"KC_VOLU": "VolUp", "KC_VOLD": "VolDn", "KC_MPRV": "Prev", "KC_MNXT": "Next",
 		"KC_HOME": "Home", "KC_END": "End", "KC_PGUP": "PgUp", "KC_PGDN": "PgDn",
 		"KC_MPLY": "Play", "KC_TAB": "Tab",
-		"KC_WBAK": "BrowserBack"}
+		"KC_WBAK": "BrowserBack", "KC_COMM": ",", "KC_QUOT": "'",
+		"KC_LALT": "LAlt", "KC_RALT": "RAlt"}
 }
 
 func (self *Scan) Err(s int) {
