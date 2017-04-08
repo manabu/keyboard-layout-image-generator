@@ -80,14 +80,18 @@ func (self *Scan) GetDisplayName(key string) string {
 		return key
 	}
 }
+
+func (self *Scan) DrawKey(pdf *gofpdf.Fpdf, curx float64, cury float64, ki KeyInformation, k int, keyindex int, lineHt float64) {
+	pdf.Rect(curx+ki.x, cury+float64(k*90)+ki.y, ki.width, ki.height, "")
+	pdf.SetXY(curx+ki.x, cury+float64(k*90)+ki.y)
+	pdf.Cell(0, 0+lineHt, self.GetDisplayName(self.keys[k][keyindex]))
+}
 func (self *Scan) Output() {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.SetFont("Arial", "", 10)
 	pdf.AddPage()
 
 	curx, cury := pdf.GetXY()
-	x := curx
-	y := cury
 	_, lineHt := pdf.GetFontSize()
 
 	//
@@ -167,9 +171,7 @@ func (self *Scan) Output() {
 						pdf.TransformBegin()
 						pdf.TransformRotate(-30, 97, 97+90*float64(k))
 					}
-					pdf.Rect(curx+ki.x, cury+float64(k*90)+ki.y, ki.width, ki.height, "")
-					pdf.SetXY(curx+ki.x, cury+float64(k*90)+ki.y)
-					pdf.Cell(0, 0+lineHt, self.GetDisplayName(self.keys[k][keyindex]))
+					self.DrawKey(pdf, curx, cury, ki, k, keyindex, lineHt)
 					keyindex = keyindex + 1
 					if j > 4 {
 						pdf.TransformEnd()
@@ -185,20 +187,14 @@ func (self *Scan) Output() {
 						pdf.TransformBegin()
 						pdf.TransformRotate(30, 113, 97+90*float64(k))
 					}
-					pdf.Rect(ki.x, cury+float64(k*90)+ki.y, ki.width, ki.height, "")
-					pdf.SetXY(ki.x, cury+float64(k*90)+ki.y)
-					pdf.Cell(0, 0+lineHt, self.GetDisplayName(self.keys[k][keyindex]))
+					self.DrawKey(pdf, 0, cury, ki, k, keyindex, lineHt)
 					keyindex = keyindex + 1
 					if j > 4 {
 						pdf.TransformEnd()
 					}
-					x += 10
 				}
 			}
-			y = y + 10
-			x = curx
 		}
-		y = y + 20
 	}
 	pdf.Output(os.Stdout)
 }
