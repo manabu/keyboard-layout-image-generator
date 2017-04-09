@@ -86,6 +86,18 @@ func (self *Scan) DrawKey(pdf *gofpdf.Fpdf, curx float64, cury float64, ki KeyIn
 	pdf.SetXY(curx+ki.x, cury+float64(k*90)+ki.y)
 	pdf.Cell(0, 0+lineHt, self.GetDisplayName(self.keys[k][keyindex]))
 }
+
+func (self *Scan) DrawKeyMain(pdf *gofpdf.Fpdf, curx float64, cury float64, ki KeyInformation, k int, keyindex int, lineHt float64, j int, tfrx float64, tfry float64) {
+	if j > 4 {
+		pdf.TransformBegin()
+		pdf.TransformRotate(tfrx, tfry, 97+90*float64(k))
+	}
+	self.DrawKey(pdf, curx, cury, ki, k, keyindex, lineHt)
+	if j > 4 {
+		pdf.TransformEnd()
+	}
+}
+
 func (self *Scan) Output() {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.SetFont("Arial", "", 10)
@@ -167,15 +179,8 @@ func (self *Scan) Output() {
 			for i := 0; i < 7; i++ {
 				var ki = lkil[j*7+i]
 				if ki.use {
-					if j > 4 {
-						pdf.TransformBegin()
-						pdf.TransformRotate(-30, 97, 97+90*float64(k))
-					}
-					self.DrawKey(pdf, curx, cury, ki, k, keyindex, lineHt)
+					self.DrawKeyMain(pdf, curx, cury, ki, k, keyindex, lineHt, j, -30, 97)
 					keyindex = keyindex + 1
-					if j > 4 {
-						pdf.TransformEnd()
-					}
 				}
 			}
 		}
@@ -183,15 +188,8 @@ func (self *Scan) Output() {
 			for i := 0; i < 7; i++ {
 				var ki = rkil[j*7+i]
 				if ki.use {
-					if j > 4 {
-						pdf.TransformBegin()
-						pdf.TransformRotate(30, 113, 97+90*float64(k))
-					}
-					self.DrawKey(pdf, 0, cury, ki, k, keyindex, lineHt)
+					self.DrawKeyMain(pdf, curx, cury, ki, k, keyindex, lineHt, j, 30, 113)
 					keyindex = keyindex + 1
-					if j > 4 {
-						pdf.TransformEnd()
-					}
 				}
 			}
 		}
