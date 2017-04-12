@@ -19,13 +19,18 @@ type KeyInformation struct {
 
 	use bool
 }
-
+type KeyStruct struct {
+	symbol     string
+	isFunction bool
+	isModifier bool
+}
 type Scan struct {
 	line        int
 	lineHead    int
 	inKeymaps   bool
 	layerNumber int
 	keys        [3][]string
+	ks          [3][]KeyStruct
 	m           map[string]string
 }
 
@@ -81,10 +86,23 @@ func (self *Scan) GetDisplayName(key string) string {
 	}
 }
 
+// color schema reference with http://www.color-hex.com/
 func (self *Scan) DrawKey(pdf *gofpdf.Fpdf, curx float64, cury float64, ki KeyInformation, k int, keyindex int, lineHt float64) {
-	pdf.Rect(curx+ki.x, cury+float64(k*90)+ki.y, ki.width, ki.height, "")
+	r, g, b := pdf.GetFillColor()
+	var drawType = "D"
+	if self.ks[k][keyindex].isFunction {
+		pdf.SetFillColor(169, 222, 255)
+		drawType = "FD"
+	}
+	if self.ks[k][keyindex].isModifier {
+		pdf.SetFillColor(207, 253, 169)
+		drawType = "FD"
+	}
+
+	pdf.Rect(curx+ki.x, cury+float64(k*90)+ki.y, ki.width, ki.height, drawType)
 	pdf.SetXY(curx+ki.x, cury+float64(k*90)+ki.y)
 	pdf.Cell(0, 0+lineHt, self.GetDisplayName(self.keys[k][keyindex]))
+	pdf.SetFillColor(r, g, b)
 }
 
 func (self *Scan) DrawKeyMain(pdf *gofpdf.Fpdf, curx float64, cury float64, ki KeyInformation, k int, keyindex int, lineHt float64, j int, tfrx float64, tfry float64) {

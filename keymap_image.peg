@@ -44,20 +44,40 @@ BRACKETS <- '[' literal* ']' {
 KEYMAP <- 'KEYMAP('
           SPACING
           ( FUNC  {
-           // fmt.Printf("line %d(%d) FIND:FUNC \"%s\"\n", p.s.line, begin - p.s.lineHead, text)
+           //fmt.Printf("line %d(%d) FIND:FUNC \"%s\"\n", p.s.line, begin - p.s.lineHead, text)
            p.s.keys[p.s.layerNumber] = append(p.s.keys[p.s.layerNumber],text)
-
+           current_ks := KeyStruct{}
+           current_ks.symbol = text
+           current_ks.isFunction = true
+           current_ks.isModifier = false
+           p.s.ks[p.s.layerNumber] = append(p.s.ks[p.s.layerNumber],current_ks)
            } / SYMB {
             //fmt.Printf("line %d(%d) FIND:SYMBOL \"%s\"\n", p.s.line, begin - p.s.lineHead, text)
             p.s.keys[p.s.layerNumber] = append(p.s.keys[p.s.layerNumber],text)
+            current_ks := KeyStruct{}
+            current_ks.symbol = text
+            current_ks.isFunction = false
+
+            current_ks.isModifier = false
+            if "KC_LCTL" == text || "KC_LCTRL" == text ||
+               "KC_LSFT" == text || "KC_LSHIFT" == text ||
+               "KC_LALT" == text ||
+               "KC_LGUI" == text ||
+               "KC_RCTL" == text || "KC_RCTRL" == text ||
+               "KC_RSFT" == text || "KC_RSHIFT" == text ||
+               "KC_RALT" == text ||
+               "KC_RGUI" == text   {
+              current_ks.isModifier = true
+            }
+            p.s.ks[p.s.layerNumber] = append(p.s.ks[p.s.layerNumber],current_ks)
             } / [ \t\r\n] / ',' / COMMENT )  *
           ')'  {
   //fmt.Printf("KEYMAP[%d]!! is done\n",p.s.layerNumber)
   p.s.layerNumber = p.s.layerNumber + 1
 }
 
-FUNC <- <SYMB '(' ( SYMB (',' SPACING SYMB )* ) ')'> SPACING
-SYMB <- <IdChar+> SPACING
+FUNC <- <SYMB '(' ( SYMB (',' SPACING SYMB )* ) ')'> SPACING { //fmt.Printf("word %d(%d) FIND:FUNC \"%s\"\n", p.s.line, begin - p.s.lineHead, text) }
+SYMB <- <IdChar+> SPACING { //fmt.Printf("word %d(%d) FIND:SYMBOL \"%s\"\n", p.s.line, begin - p.s.lineHead, text) }
 IdChar   <- [a-z] / [A-Z] / [0-9] / [_]
 
 
@@ -70,7 +90,7 @@ literal <- ' '+       {  }   /
           KEYMAPS_END /
           LINECOMMENT /
           LONGCOMMENT /
-           <[^ \[\]\n]+>  { 
+           <[^ \[\]\n]+>  {
                         //fmt.Printf("line %d(%d) KIND:OTHER \"%s\"\n", p.s.line, begin - p.s.lineHead, text)
                       }
 
