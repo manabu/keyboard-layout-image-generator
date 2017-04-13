@@ -1,5 +1,5 @@
 package main
-
+import "strings"
 type Parser Peg {
     s Scan
 }
@@ -50,6 +50,7 @@ KEYMAP <- 'KEYMAP('
            current_ks.symbol = text
            current_ks.isFunction = true
            current_ks.isModifier = false
+           current_ks.isLEDControl = false
            p.s.ks[p.s.layerNumber] = append(p.s.ks[p.s.layerNumber],current_ks)
            } / SYMB {
             //fmt.Printf("line %d(%d) FIND:SYMBOL \"%s\"\n", p.s.line, begin - p.s.lineHead, text)
@@ -57,8 +58,8 @@ KEYMAP <- 'KEYMAP('
             current_ks := KeyStruct{}
             current_ks.symbol = text
             current_ks.isFunction = false
-
             current_ks.isModifier = false
+            current_ks.isLEDControl = false
             if "KC_LCTL" == text || "KC_LCTRL" == text ||
                "KC_LSFT" == text || "KC_LSHIFT" == text ||
                "KC_LALT" == text ||
@@ -68,6 +69,9 @@ KEYMAP <- 'KEYMAP('
                "KC_RALT" == text ||
                "KC_RGUI" == text   {
               current_ks.isModifier = true
+            }
+            if strings.Index(text, "RGB_") == 0 {
+              current_ks.isLEDControl = true
             }
             p.s.ks[p.s.layerNumber] = append(p.s.ks[p.s.layerNumber],current_ks)
             } / [ \t\r\n] / ',' / COMMENT )  *

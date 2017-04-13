@@ -20,9 +20,10 @@ type KeyInformation struct {
 	use bool
 }
 type KeyStruct struct {
-	symbol     string
-	isFunction bool
-	isModifier bool
+	symbol       string
+	isFunction   bool
+	isModifier   bool
+	isLEDControl bool
 }
 type Scan struct {
 	line        int
@@ -96,6 +97,10 @@ func (self *Scan) DrawKey(pdf *gofpdf.Fpdf, curx float64, cury float64, ki KeyIn
 	}
 	if self.ks[k][keyindex].isModifier {
 		pdf.SetFillColor(207, 253, 169)
+		drawType = "FD"
+	}
+	if self.ks[k][keyindex].isLEDControl {
+		pdf.SetFillColor(250, 253, 188)
 		drawType = "FD"
 	}
 
