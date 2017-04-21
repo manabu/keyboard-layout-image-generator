@@ -211,7 +211,7 @@ func (self *Scan) Output() {
 			for i := 0; i < 7; i++ {
 				var ki = rkil[j*7+i]
 				if ki.use {
-					self.DrawKeyMain(pdf, curx, cury, ki, k, keyindex, lineHt, j, 30, 113)
+					self.DrawKeyMain(pdf, 0, cury, ki, k, keyindex, lineHt, j, 30, 113)
 					keyindex = keyindex + 1
 				}
 			}
